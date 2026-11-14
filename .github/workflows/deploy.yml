@@ -27,7 +27,7 @@ jobs:
           node-version: '24'
 
       - name: Install dependensi
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build aplikasi
         run: npm run build
