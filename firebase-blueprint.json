@@ -1,0 +1,208 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Pengaturan pengguna yang tersinkronisasi untuk notifikasi dan audio pengingat.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID Firebase pemilik dokumen",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Nama tampilan pengguna",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "soundEnabled": {
+          "type": "boolean",
+          "description": "Aktifkan suara lonceng saat pengingat berbunyi"
+        },
+        "notificationsEnabled": {
+          "type": "boolean",
+          "description": "Status preferensi notifikasi pengingat harian"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu pembuatan dokumen"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu pembaruan terakhir"
+        }
+      },
+      "required": ["ownerId", "displayName", "soundEnabled", "notificationsEnabled", "createdAt", "updatedAt"]
+    },
+    "FbAccount": {
+      "title": "FbAccount",
+      "description": "Data master akun atau halaman Facebook yang dikelola.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID Firebase pemilik akun",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nama akun atau halaman Facebook",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "username": {
+          "type": "string",
+          "description": "Handle atau catatan identitas singkat akun",
+          "minLength": 0,
+          "maxLength": 80
+        },
+        "profileUrl": {
+          "type": "string",
+          "description": "Tautan langsung ke profil atau halaman Facebook",
+          "minLength": 0,
+          "maxLength": 240
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Apakah akun aktif dipantau setiap hari"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu akun ditambahkan"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu pembaruan terakhir"
+        }
+      },
+      "required": ["ownerId", "name", "username", "profileUrl", "isActive", "createdAt", "updatedAt"]
+    },
+    "DailyCheck": {
+      "title": "DailyCheck",
+      "description": "Status checklist harian (sudah login dan sudah upload konten) untuk satu akun pada satu tanggal.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID Firebase pemilik",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "dateKey": {
+          "type": "string",
+          "description": "Kunci tanggal format YYYY-MM-DD",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "accountId": {
+          "type": "string",
+          "description": "ID dokumen FbAccount terkait",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "loggedIn": {
+          "type": "boolean",
+          "description": "Status apakah akun sudah login hari ini"
+        },
+        "uploaded": {
+          "type": "boolean",
+          "description": "Status apakah konten sudah diupload hari ini"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu log dibuat"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu log diperbarui"
+        }
+      },
+      "required": ["ownerId", "dateKey", "accountId", "loggedIn", "uploaded", "createdAt", "updatedAt"]
+    },
+    "DailyReminder": {
+      "title": "DailyReminder",
+      "description": "Jadwal pengingat harian otomatis untuk mengecek login atau upload konten.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID Firebase pemilik",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "label": {
+          "type": "string",
+          "description": "Judul pengingat harian",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "time": {
+          "type": "string",
+          "description": "Jam pengingat format 24 jam HH:mm",
+          "minLength": 5,
+          "maxLength": 5,
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "targetType": {
+          "type": "string",
+          "enum": ["login", "upload", "both"],
+          "description": "Jenis status yang dicek saat pengingat berbunyi"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Apakah jadwal pengingat ini aktif"
+        },
+        "lastTriggeredDate": {
+          "type": "string",
+          "description": "Tanggal terakhir pengingat dipicu (YYYY-MM-DD atau kosong)",
+          "minLength": 0,
+          "maxLength": 10
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu jadwal dibuat"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu jadwal diperbarui"
+        }
+      },
+      "required": ["ownerId", "label", "time", "targetType", "enabled", "lastTriggeredDate", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Dokumen profil dan preferensi pengingat pengguna"
+    },
+    "/users/{userId}/fbAccounts/{accountId}": {
+      "schema": { "$ref": "#/entities/FbAccount" },
+      "description": "Daftar akun Facebook yang dikelola oleh pengguna"
+    },
+    "/users/{userId}/dailyChecks/{checkId}": {
+      "schema": { "$ref": "#/entities/DailyCheck" },
+      "description": "Catatan status login dan upload harian per akun dan tanggal"
+    },
+    "/users/{userId}/reminders/{reminderId}": {
+      "schema": { "$ref": "#/entities/DailyReminder" },
+      "description": "Jadwal pengingat harian otomatis milik pengguna"
+    }
+  }
+}

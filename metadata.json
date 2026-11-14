@@ -1,0 +1,6 @@
+{
+  "name": "PantauFB — Checklist Akun Facebook",
+  "description": "Dashboard checklist harian login dan upload konten multi-akun Facebook dengan kalender bawaan, notifikasi otomatis, dan sinkronisasi cloud.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
